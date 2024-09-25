@@ -14,7 +14,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="resource/css/styles.css" rel="stylesheet" />
         @vite('resources/css/styles.css') <!-- Para cargar mis estilos -->
     </head>
     <body>
@@ -32,6 +32,16 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.blade.php">Sobre Nosotros</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.blade.php">Forum</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.blade.php">Contactenos</a></li>
+                        
+                        @if (Route::has('login')) <!-- Verificamos que si exista la ruta del inicio de sesion-->
+                            @auth <!-- si el usuario esta autenticado-->
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url('/dashboard') }}">Dashboard</a></li>
+                            @else <!-- si no, que inicie sesion o registro-->
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">Iniciar Sesión</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('register') }}">Registro</a></li>
+                            @endauth
+                        @endif
+                    
                     </ul>
                 </div>
             </div>
@@ -43,7 +53,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1>Las voces de la ciudad</h1>
-                            <span class="subheading">Blog sobre la actualidad paisa, sin filtros</span>
+                            <span class="subheading">Blog sobre la actualidad de la ciudad, sin filtros</span>
                         </div>
                     </div>
                 </div>

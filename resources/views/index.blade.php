@@ -37,60 +37,31 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">NOTICIA 1</h2>
-                            <h3 class="post-subtitle">Palabras para la noticia 1.....</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html"><h2 class="post-title">NOTICIA 2</h2></a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 18, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">NOTICIA 3</h2>
-                            <h3 class="post-subtitle">Palabrasssssssssss</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on August 24, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">NOTICIA 4</h2>
-                            <h3 class="post-subtitle">Palabras sobre la noticia</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on July 8, 2023
-                        </p>
-                    </div>
+
+                    @foreach($notices as $notice)
+                        <div>
+                            <a href="{{ route('forum.show', $notice->id) }}">
+                                <h2 class="post-title">{{ $notice->title }}</h2>
+                                <p class="post-subtitle">{{ Str::limit($notice->description, 100) }}</p>
+                            </a>
+                            <p class="post-meta">
+                                Publicado por
+                                <a href="#!">{{ $notice->author }}</a>
+                                en {{ $notice->created_at }}
+                            </p>
+                        </div>
+                    @endforeach
+
                     <!-- Divider-->
                     <hr class="my-4" />
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Todas las noticias</a></div>
+                    <span class="d-flex justify-content-end mb-4">
+                        <a 
+                        class="btn btn-info rounded py-2 text-uppercase" 
+                        href="{{ route('forum.show', $notice->id) }}">
+                        Leer más
+                    </a>
+                </span>
                 </div>
             </div>
         </div>

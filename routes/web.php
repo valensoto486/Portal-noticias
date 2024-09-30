@@ -40,7 +40,9 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 //RUTAS DE MIS PAGINAS
 //Route::get('/', [InicioController::class, 'index'])->name('index');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+Route::get('/', [ForumController::class, 'index'])->name('forum');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
 
 require __DIR__.'/auth.php';

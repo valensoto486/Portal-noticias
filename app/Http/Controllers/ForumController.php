@@ -9,7 +9,6 @@ class ForumController extends Controller
 {
     public function index()
     {
-        //return view('forum');
 
         $notices = Forum::all();
         return view('index', compact('notices'));

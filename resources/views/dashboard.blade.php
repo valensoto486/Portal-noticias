@@ -1,20 +1,20 @@
-<x-app-layout>
-    <x-slot name="header">
-        @include('components.header') <!-- header -->
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("Iniciaste Sesion") }}
-                </div>
-            </div>
+@section('content')
+<div class="container">
+    @include('components.header') <!-- header -->
+    <h1>Dashboard del Administrador</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Gestión de Usuarios</h2>
+            <a href="{{ route('admin.users') }}" class="btn btn-primary">Ver Usuarios</a>
+        </div>
+        <div class="col-md-6">
+            <h2>Gestión de Contenido</h2>
+            <a href="{{ route('admin.content') }}" class="btn btn-primary">Ver Contenido</a>
         </div>
     </div>
     @include('components.footer') <!-- footer -->
+</div>
+@endsection
 
-</x-app-layout>

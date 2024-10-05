@@ -46,6 +46,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/admin/content', [AdminController::class, 'content'])->name('admin.content');
+
+    // Rutas para editar y eliminar usuarios
+    Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+
+    // Rutas para editar y eliminar contenido
+    Route::get('/admin/content/{forum}/edit', [AdminController::class, 'editContent'])->name('admin.content.edit');
+    Route::delete('/admin/content/{forum}', [AdminController::class, 'destroyContent'])->name('admin.content.destroy');
+
+    Route::put('/admin/content/{forum}', [AdminController::class, 'updateContent'])->name('admin.content.update');
+
 });
 
 require __DIR__.'/auth.php';

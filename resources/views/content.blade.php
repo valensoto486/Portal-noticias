@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Contenido</h1>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3">Volver al Dashboard</a>
     <table class="table">
         <thead>
             <tr>
@@ -17,9 +18,8 @@
                 <td>{{ $forum->title }}</td>
                 <td>{{ $forum->description }}</td>
                 <td>
-                    <!-- Agregar botones para editar o eliminar contenido -->
-                    <a href="#" class="btn btn-warning">Editar</a>
-                    <form action="#" method="POST" style="display:inline;">
+                    <a href="{{ route('admin.content.edit', $forum) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ route('admin.content.destroy', $forum) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>

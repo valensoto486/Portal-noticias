@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Usuarios</h1>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3">Volver al Dashboard</a>
     <table class="table">
         <thead>
             <tr>
@@ -19,9 +20,8 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
                 <td>
-                    <!-- Agregar botones para editar o eliminar usuarios -->
-                    <a href="#" class="btn btn-warning">Editar</a>
-                    <form action="#" method="POST" style="display:inline;">
+                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>

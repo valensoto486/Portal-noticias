@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Voces de la ciudad | Sin filtros</title>
+        <title>Medellín Hoy | Sin filtros</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -20,12 +20,12 @@
         
         @include('components.header') <!-- header -->
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{{ asset('assets/img/home-bg.jpg') }}')">
+        <header class="masthead" style="background-image: url('{{ Vite::asset('resources/images/ciudad-de-medellin.webp') }}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>Las voces de la ciudad</h1>
+                            <h1 class="font-sans">Las voces de la ciudad</h1>
                             <span class="subheading">Blog sobre la actualidad de la ciudad, <span class="alert bg-info rounded py-1">sin filtros</span></span>
                         </div>
                     </div>
@@ -47,7 +47,6 @@
                             <p class="post-meta">
                                 Publicado por
                                 <a href="#!">{{ $notice->author }}</a>
-                                en {{ $notice->created_at }}
                             </p>
                         </div>
                     @endforeach
@@ -57,7 +56,7 @@
                     <!-- Pager-->
                     <span class="d-flex justify-content-end mb-4">
                         <a 
-                        class="btn btn-info rounded py-2 text-uppercase" 
+                        class="btn btn-info rounded py-2 text-light text-uppercase" 
                         href="{{ route('forum.show', $notice->id) }}">
                         Leer más
                     </a>

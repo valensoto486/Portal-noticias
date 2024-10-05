@@ -11,7 +11,7 @@ class ForumController extends Controller
     {
 
         $notices = Forum::all();
-        return view('index', compact('notices'));
+        return view('forum', compact('notices'));
     }
 
     public function show($id)

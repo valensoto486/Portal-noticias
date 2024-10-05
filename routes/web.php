@@ -9,10 +9,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\InicioController;
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -38,9 +34,9 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 //RUTAS DE MIS PAGINAS
-Route::get('/index', [InicioController::class, 'index'])->name('index');
+Route::get('/', [InicioController::class, 'index'])->name('index');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/', [ForumController::class, 'index'])->name('forum');
+Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');

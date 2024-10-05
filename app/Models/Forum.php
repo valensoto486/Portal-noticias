@@ -11,5 +11,5 @@ class Forum extends Model
 
     protected $table = 'notices'; 
 
-    protected $fillable = ['title', 'description', 'content', 'author'];
+    protected $fillable = ['title', 'description', 'content', 'banner_image', 'author'];
 }

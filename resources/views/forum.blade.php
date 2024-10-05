@@ -1,3 +1,5 @@
+<!-- resources/views/forum.blade.php -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,17 +21,35 @@
     <body>
         
         @include('components.header') <!-- header -->
-        
-        <!-- Page Header-->
-        @foreach($notices as $notice)
-        <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
-            <a href="{{ route('forum.show', $notice->id) }}">
+
+        @if(isset($notices)) <!-- Si hay múltiples noticias -->
+            @foreach($notices as $notice)
+            <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
+                <a href="{{ route('forum.show', $notice->id) }}">
+                    <div class="container position-relative px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <div class="post-heading">
+                                    <h2>{{ $notice->title }}</h2>
+                                    <p>{{ $notice->description }}</p>
+                                    <span class="meta">
+                                        Publicado por
+                                        <a href="#!">{{ $notice->author }}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </header>
+            @endforeach
+        @elseif(isset($notice)) <!-- Si es una sola noticia -->
+            <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
                 <div class="container position-relative px-4 px-lg-5">
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-md-10 col-lg-8 col-xl-7">
                             <div class="post-heading">
                                 <h2>{{ $notice->title }}</h2>
-                                <p>{{ $notice->description }}</p>
                                 <span class="meta">
                                     Publicado por
                                     <a href="#!">{{ $notice->author }}</a>
@@ -38,15 +58,23 @@
                         </div>
                     </div>
                 </div>
-            </a>
-        </header>
-        @endforeach
+            </header>
+
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-content">
+                            <p>{!! $notice->content !!}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- Footer-->
         @include('components.footer')
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>

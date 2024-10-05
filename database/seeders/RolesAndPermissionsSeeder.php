@@ -11,20 +11,27 @@ class RolesAndPermissionsSeeder extends Seeder
 {
     public function run()
     {
-        // Permisos
-        Permission::create(['name' => 'create posts']);
-        Permission::create(['name' => 'edit posts']);
-        Permission::create(['name' => 'delete posts']);
-        Permission::create(['name' => 'publish posts']);
+        // Verificar si los permisos ya existen, y crearlos solo si no existen en la db
+        $permissions = [
+            'create posts',
+            'edit posts',
+            'delete posts',
+            'publish posts'
+        ];
 
-        // ROLES: admin, editor y usuario
-        $admin = Role::create(['name' => 'admin']);
-        $editor = Role::create(['name' => 'editor']);
-        $user = Role::create(['name' => 'user']);
+        foreach ($permissions as $permission) {
+            // Crear el permiso solo si no existe
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        // Crear roles solo si no existen
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $editor = Role::firstOrCreate(['name' => 'editor']);
+        $user = Role::firstOrCreate(['name' => 'user']);
 
         // Asignar permisos a roles
-        $admin->givePermissionTo(['create posts', 'edit posts', 'delete posts', 'publish posts']);
-        $editor->givePermissionTo(['create posts', 'edit posts', 'publish posts']);
-        $user->givePermissionTo('create posts');
+        $admin->syncPermissions($permissions);
+        $editor->syncPermissions(['create posts', 'edit posts', 'publish posts']);
+        $user->syncPermissions(['create posts']);
     }
 }

@@ -41,4 +41,11 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
 
+//Rutas para el dashboard del admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/content', [AdminController::class, 'content'])->name('admin.content');
+});
+
 require __DIR__.'/auth.php';

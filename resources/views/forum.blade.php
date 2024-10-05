@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
+        <title>Medellín Hoy | Forum</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -21,32 +21,26 @@
         @include('components.header') <!-- header -->
         
         <!-- Page Header-->
+        @foreach($notices as $notice)
         <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="post-heading">
-                            <h1>{{ $notice->title }}</h1>
-                            <span class="meta">
-                                Publicado por
-                                <a href="#!">{{ $notice->author }}</a>
-                                en Agosto 24, 2024
-                            </span>
+            <a href="{{ route('forum.show', $notice->id) }}">
+                <div class="container position-relative px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <div class="post-heading">
+                                <h2>{{ $notice->title }}</h2>
+                                <p>{{ $notice->description }}</p>
+                                <span class="meta">
+                                    Publicado por
+                                    <a href="#!">{{ $notice->author }}</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </header>
-        <!-- Post Content-->
-        <article class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>{{ $notice->content }}</p>
-                    </div>
-                </div>
-            </div>
-        </article>
+        @endforeach
         <!-- Footer-->
         @include('components.footer')
 

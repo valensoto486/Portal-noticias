@@ -56,7 +56,7 @@
                     <!-- Pager-->
                     <span class="d-flex justify-content-end mb-4">
                         <a 
-                        class="btn btn-info rounded py-2 text-uppercase" 
+                        class="btn btn-info rounded py-2 text-light text-uppercase" 
                         href="{{ route('forum.show', $notice->id) }}">
                         Leer más
                     </a>

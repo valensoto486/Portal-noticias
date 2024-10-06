@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RegisteredUserController extends Controller
 {
@@ -40,7 +41,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Rol por defecto al usuario
-        $user->assignRole('usuario');
+        $user->assignRole('user');
 
         event(new Registered($user));
 

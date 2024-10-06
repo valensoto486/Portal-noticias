@@ -8,6 +8,8 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\InicioController;
+use Spatie\Permission\Models\Role;
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -57,6 +59,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::put('/admin/content/{forum}', [AdminController::class, 'updateContent'])->name('admin.content.update');
 
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+    
+    });
+    
+    Route::middleware(['auth', 'permission:view-posts'])->group(function () {
+        
+    });
+    
 });
 
 require __DIR__.'/auth.php';

@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         // Usuario de prueba
         $user = User::factory()->create([
             'name' => 'AlejoValen',
-            'email' => 'admin@example.com',
+            'email' => 'admin2@gmail.com',
+            'password' => '123456789',
         ]);
 
         // Asignar el rol "admin" al usuario

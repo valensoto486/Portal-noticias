@@ -44,4 +44,13 @@
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Opción de registrarse si no tiene cuenta -->
+    <div class="mt-4 text-center">
+        <span class="text-sm text-gray-600">{{ __('¿No tienes una cuenta?') }}</span>
+        <a href="{{ route('register') }}" class="underline text-sm text-cyan-500 hover:text-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">
+            {{ __('Registrarse') }}
+        </a>
+    </div>
+
 </x-guest-layout>

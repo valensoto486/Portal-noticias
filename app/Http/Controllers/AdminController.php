@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Forum;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 
 use Illuminate\Http\Request;
 

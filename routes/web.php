@@ -41,7 +41,12 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
+// Ruta para el foro con filtros
+Route::get('/forum', [ForumController::class, 'index'])->name('forum');
+
+// Ruta para mostrar una noticia específica en el foro
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+
 
 //Rutas para el dashboard del admin
 Route::middleware(['auth', 'role:admin'])->group(function () {

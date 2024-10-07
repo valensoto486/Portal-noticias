@@ -16,32 +16,66 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         
         @vite('resources/css/styles.css') <!-- Para cargar mis estilos -->
-
+        
     </head>
     <body>
-        
         @include('components.header') <!-- header -->
+        <!-- Formulario de Búsqueda y Filtros -->
+        <div class="container my-4" >
+            <form action="{{ route('forum') }}" method="GET" style="border: 55px solid #ccc; padding: 20px; border-radius: 5px; background-color: #f9f9f9;">
+                <div class="row">
+                    <!-- Búsqueda por título -->
+                    <div class="col-md-4">
+                        <label for="title" class="form-label">Buscar por Título</label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Título de la noticia" value="{{ request('title') }}">
+                    </div>
+                    
+                    <!-- Filtrar por Autor -->
+                    <div class="col-md-4">
+                        <label for="author" class="form-label">Filtrar por Autor</label>
+                        <input type="text" id="author" name="author" class="form-control" placeholder="Autor de la noticia" value="{{ request('author') }}">
+                    </div>
 
+                    <!-- Filtrar por Categoría -->
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">Filtrar por Categoría</label>
+                        <select id="category" name="category" class="form-control">
+                            <option value="">Todas las categorías</option>
+                            <option value="politica" {{ request('category') == 'politica' ? 'selected' : '' }}>Política</option>
+                            <option value="deportes" {{ request('category') == 'deportes' ? 'selected' : '' }}>Deportes</option>
+                            <option value="economia" {{ request('category') == 'economia' ? 'selected' : '' }}>Economía</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Noticias filtradas o una sola noticia -->
         @if(isset($notices)) <!-- Si hay múltiples noticias -->
             @foreach($notices as $notice)
-            <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
-                <a href="{{ route('forum.show', $notice->id) }}">
-                    <div class="container position-relative px-4 px-lg-5">
-                        <div class="row gx-4 gx-lg-5 justify-content-center">
-                            <div class="col-md-10 col-lg-8 col-xl-7">
-                                <div class="post-heading">
-                                    <h2>{{ $notice->title }}</h2>
-                                    <p>{{ $notice->description }}</p>
-                                    <span class="meta">
-                                        Publicado por
-                                        <a href="#!">{{ $notice->author }}</a>
-                                    </span>
+                <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
+                    <a href="{{ route('forum.show', $notice->id) }}">
+                        <div class="container position-relative px-4 px-lg-5">
+                            <div class="row gx-4 gx-lg-5 justify-content-center">
+                                <div class="col-md-10 col-lg-8 col-xl-7">
+                                    <div class="post-heading">
+                                        <h2>{{ $notice->title }}</h2>
+                                        <p>{{ $notice->description }}</p>
+                                        <span class="meta">
+                                            Publicado por
+                                            <a href="#!">{{ $notice->author }}</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </header>
+                    </a>
+                </header>
             @endforeach
         @elseif(isset($notice)) <!-- Si es una sola noticia -->
             <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
@@ -77,4 +111,5 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
+
 </html>

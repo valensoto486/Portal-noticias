@@ -10,6 +10,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\InicioController;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
 
 
 Route::get('/dashboard', function () {
@@ -48,6 +49,8 @@ Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 // Ruta para mostrar una noticia específica en el foro
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
 
+//Ruta Comentarios
+Route::post('/forum/{forum}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 //Rutas para el dashboard del admin
 Route::middleware(['auth', 'role:admin'])->group(function () {

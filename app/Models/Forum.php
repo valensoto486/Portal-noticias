@@ -12,4 +12,16 @@ class Forum extends Model
     protected $table = 'notices'; 
 
     protected $fillable = ['title', 'description', 'content', 'banner_image', 'author'];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'notice_id');
+    }
+
+    public function show($id)
+    {
+        $notice = Forum::with('comments.user')->findOrFail($id);
+        return view('forum.show', compact('notice'));
+    }
+
 }

@@ -81,6 +81,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::middleware(['auth', 'permission:view-posts'])->group(function () {
         
     });
+
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    });
     
 });
 

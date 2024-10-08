@@ -15,7 +15,15 @@
                 
                 @if (Route::has('login'))
                     @auth
-                        <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        @if (Auth::user()->hasRole('admin'))
+                            <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        @endif
+                        <li class="nav-item mx-2">
+                            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-light text-info rounded" style="background-color: white; border: none;">Cerrar Sesión</button>
+                            </form>
+                        </li>
                     @else
                         <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('login') }}">Iniciar Sesión</a></li>
                         <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-info rounded" href="{{ route('register') }}">Registro</a></li>

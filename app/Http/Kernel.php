@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         // otros middlewares
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Http\Middleware\PermissionMiddleware::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
     
 }

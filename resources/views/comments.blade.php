@@ -23,7 +23,7 @@
                     <td>{{ $comment->user->name }}</td>
                     <td>{{ $comment->body }}</td>
                     <td>
-                        <a href="{{ route('admin.comments.edit', $comment) }}" class="btn btn-warning">Editar</a>
+                        <a href="{{ route('admin.comments.edit', $comment) }}" class="btn btn-warning" style="background-color: #0dcaf0; color: white; border: none;">Editar</a>
                         <form action="{{ route('admin.comments.destroy', $comment) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

@@ -9,6 +9,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\InicioController;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\AdminController;
 
 
 Route::get('/dashboard', function () {
@@ -56,11 +57,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Rutas para editar y eliminar usuarios
     Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
-    Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+    Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.destroy');
 
     // Rutas para editar y eliminar contenido
     Route::get('/admin/content/{forum}/edit', [AdminController::class, 'editContent'])->name('admin.content.edit');
-    Route::delete('/admin/content/{forum}', [AdminController::class, 'destroyContent'])->name('admin.content.destroy');
+    Route::delete('/admin/content/{forum}', [AdminController::class, 'deleteContent'])->name('admin.content.destroy');
 
     Route::put('/admin/content/{forum}', [AdminController::class, 'updateContent'])->name('admin.content.update');
 

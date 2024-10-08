@@ -71,7 +71,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::middleware(['auth', 'role:admin'])->group(function () {
     
-    });
+    Route::get('/admin/comments', [CommentController::class, 'index'])->name('admin.comments.index');
+    Route::get('/admin/comments/{comment}/edit', [CommentController::class, 'edit'])->name('admin.comments.edit');
+    Route::put('/admin/comments/{comment}', [CommentController::class, 'update'])->name('admin.comments.update');
+    Route::delete('/admin/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.destroy');
+    
+});
     
     Route::middleware(['auth', 'permission:view-posts'])->group(function () {
         

@@ -24,10 +24,10 @@
                     <td>{{ $comment->body }}</td>
                     <td>
                         <a href="{{ route('admin.comments.edit', $comment) }}" class="btn btn-warning" style="background-color: #0dcaf0; color: white; border: none;">Editar</a>
-                        <form action="{{ route('admin.comments.destroy', $comment) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.comments.destroy', $comment) }}" method="POST" style="display:inline;" id="delete-form-{{ $comment->id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmarEliminacion(event, {{ $comment->id }})">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -36,4 +36,16 @@
     </table>
 </div>
 @include('components.footer')
+
+<script>
+    function confirmarEliminacion(event, commentId) {
+        event.preventDefault(); // Evitar el envío del formulario inmediato
+        const form = document.getElementById(`delete-form-${commentId}`);
+        const confirmacion = confirm("¿Estás seguro de eliminar este comentario?");
+        if (confirmacion) {
+            form.submit(); // Enviar el formulario si el usuario acepta
+        }
+    }
+</script>
 @endsection
+

@@ -1,5 +1,4 @@
-<!-- Para reutilizar el header -->
-<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-light {{ Route::currentRouteName() == 'forum' ? 'bg-primary' : '' }}" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="{{ route('index') }}">Medellín <span class="text-info">Hoy</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,7 +8,6 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav align-items-baseline ms-auto py-4 py-lg-0">
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Inicio</a></li>
-                {{-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('about') }}">Sobre Nosotros</a></li> --}}
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('forum') }}">Forum</a></li>
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('contact') }}">Contáctenos</a></li>
                 

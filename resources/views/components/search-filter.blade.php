@@ -9,13 +9,13 @@
             
             <!-- Filtrar por Autor -->
             <div class="col-md-4">
-                <label for="author" class="form-label">Filtrar por autor</label>
+                <label for="author" class="form-label">Buscar por autor</label>
                 <input type="text" id="author" name="author" class="form-control rounded" placeholder="Autor de la noticia" value="{{ request('author') }}">
             </div>
 
             <!-- Filtrar por Categoría -->
             <div class="col-md-4">
-                <label for="category" class="form-label">Filtrar por categoría</label>
+                <label for="category" class="form-label">Buscar por categoría</label>
                 <select id="category" name="category" class="form-control rounded">
                     <option value="">Todas las categorías</option>
                     <option value="politica" {{ request('category') == 'politica' ? 'selected' : '' }}>Política</option>
@@ -26,7 +26,7 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <button type="submit" class="px-lg-3 py-1 py-lg-1 btn btn-info text-light rounded">Aplicar filtros</button>
+                <button type="submit" class="px-lg-3 py-1 py-lg-1 btn btn-info text-light rounded">Aplicar Busqueda</button>
             </div>
         </div>
     </form>

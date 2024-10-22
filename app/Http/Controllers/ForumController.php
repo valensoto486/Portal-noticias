@@ -7,7 +7,7 @@ use App\Models\Forum;
 
 class ForumController extends Controller
 {
-    // Método para mostrar las noticias con o sin filtros
+    // Funcion para mostrar las noticias con o sin los filtros :)
     public function index(Request $request)
     {
         $query = Forum::query(); // Inicia la consulta para obtener las noticias
@@ -27,14 +27,14 @@ class ForumController extends Controller
             $query->where('category', $request->category);
         }
 
-        // Si no hay filtros aplicados, simplemente retorna todas las noticias
-        $notices = $query->get();
+        // paginación después de los filtros
+        $notices = $query->orderBy('created_at', 'desc')->paginate(5);
 
-        // Retorna la vista con las noticias (filtradas o no)
         return view('forum', compact('notices'));
     }
 
-    // Método para mostrar una noticia específica
+
+    // Funcion para mostrar una noticia específica
     public function show($id)
     {
         $notice = Forum::findOrFail($id); // Buscar la noticia por su ID

@@ -39,7 +39,7 @@
 
 <script>
     function confirmarEliminacion(event, commentId) {
-        event.preventDefault(); // Evitar el envío del formulario inmediato
+        event.preventDefault(); // Evita el envío del formulario inmediato
         const form = document.getElementById(`delete-form-${commentId}`);
         const confirmacion = confirm("¿Estás seguro de eliminar este comentario?");
         if (confirmacion) {

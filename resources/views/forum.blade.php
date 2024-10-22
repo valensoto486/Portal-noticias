@@ -46,6 +46,12 @@
                     </a>
                 </header>
             @endforeach
+
+            <!-- Enlaces para la paginacion-->
+            <div class="d-flex justify-content-center">
+            {{ $notices->links('pagination::bootstrap-5') }}
+            </div>
+
         @elseif(isset($notice)) <!-- Si es una sola noticia -->
             <header class="masthead" style="background-image: url('{{ Vite::asset($notice->banner_image) }}')">
                 <div class="container position-relative px-4 px-lg-5">

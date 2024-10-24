@@ -37,7 +37,8 @@ class ForumController extends Controller
     // Funcion para mostrar una noticia específica
     public function show($id)
     {
-        $notice = Forum::findOrFail($id); // Buscar la noticia por su ID
+        $notice = Forum::find($id);
+
         return view('forum', compact('notice'));
     }
 }

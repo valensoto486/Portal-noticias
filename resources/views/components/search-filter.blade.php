@@ -15,12 +15,12 @@
 
             <!-- Filtrar por Categoría -->
             <div class="col-md-4">
-                <label for="category" class="form-label">Buscar por categoría</label>
-                <select id="category" name="category" class="form-control rounded">
+                <label for="created_at" class="form-label">filtrar por fecha</label>
+                <select id="created_at" name="created_at" class="form-control rounded">
                     <option value="">Todas las categorías</option>
-                    <option value="politica" {{ request('category') == 'politica' ? 'selected' : '' }}>Política</option>
-                    <option value="deportes" {{ request('category') == 'deportes' ? 'selected' : '' }}>Deportes</option>
-                    <option value="economia" {{ request('category') == 'economia' ? 'selected' : '' }}>Economía</option>
+                    <option value="Hoy" {{ request('created_at') == '' ? 'selected' : '' }}>Hoy</option>
+                    <option value="Ultima semana" {{ request('created_at') == 'ultima semana' ? 'selected' : '' }}>Ultima Semana</option>
+                    <option value="Ultimo mes" {{ request('created_at') == 'ultimo mes' ? 'selected' : '' }}>Ultimo mes</option>
                 </select>
             </div>
         </div>

@@ -17,7 +17,6 @@
             <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
         </div>
         
-        <!-- Aquí puedes agregar un selector de rol si es necesario -->
         
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>

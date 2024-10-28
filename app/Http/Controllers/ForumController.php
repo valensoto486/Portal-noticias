@@ -23,8 +23,14 @@ class ForumController extends Controller
         }
 
         // Filtro por categoría
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('created_at')) {
+            if ($request->created_at == 'Hoy') {
+                $query->whereDate('created_at', '=', date('Y-m-d'));
+            } elseif ($request->created_at == 'Ultima semana') {
+                $query->whereBetween('created_at', [now()->subWeek(), now()]);
+            } elseif ($request->created_at == 'Ultimo mes') {
+                $query->whereBetween('created_at', [now()->subMonth(), now()]);
+            }
         }
 
         // paginación después de los filtros

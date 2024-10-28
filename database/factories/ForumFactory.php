@@ -12,6 +12,7 @@ class ForumFactory extends Factory
     public function definition()
     {
         return [
+            'notice_id' => $this->faker->unique()->randomNumber(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'content' => $this->faker->paragraphs(3, true),

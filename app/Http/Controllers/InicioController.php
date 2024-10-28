@@ -10,7 +10,9 @@ class InicioController extends Controller
 {
     public function index()
     {
-        $notices = Forum::all();
+        $query = Forum::query();
+
+        $notices = $query->orderBy('created_at', 'desc')->paginate(5);
         return view('index', compact('notices'));
     }
 }

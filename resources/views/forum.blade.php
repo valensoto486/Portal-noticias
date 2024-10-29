@@ -22,7 +22,9 @@
         @include('components.header') <!-- header -->
 
         <!-- Formulario de Búsqueda y Filtros -->
-        @include('components.search-filter')
+        @if(isset($notices))
+            @include('components.search-filter')
+        @endif
 
         <!-- Noticias filtradas o una sola noticia -->
         @if(isset($notices)) <!-- Si hay múltiples noticias -->

@@ -15,7 +15,7 @@
 
             <!-- Filtrar por Categoría -->
             <div class="col-md-4">
-                <label for="created_at" class="form-label">filtrar por fecha</label>
+                <label for="created_at" class="form-label">Filtrar por fecha</label>
                 <select id="created_at" name="created_at" class="form-control rounded">
                     <option value="">Todas las categorías</option>
                     <option value="Hoy" {{ request('created_at') == '' ? 'selected' : '' }}>Hoy</option>

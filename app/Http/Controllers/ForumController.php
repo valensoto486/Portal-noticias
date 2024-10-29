@@ -33,14 +33,14 @@ class ForumController extends Controller
             }
         }
 
-        // paginación después de los filtros
+        // Paginación después de los filtros
         $notices = $query->orderBy('created_at', 'desc')->paginate(5);
 
         return view('forum', compact('notices'));
     }
 
 
-    // Funcion para mostrar una noticia específica
+    // Función para mostrar una noticia específica
     public function show($id)
     {
         $notice = Forum::find($id);

@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Editar Comentario</h1>
 
-    <form action="{{ route('admin.comments.update', $comment) }}" method="POST">
+    <form action="{{ route('admin.comments.update', $comment) }}" method="POST" onsubmit="return confirmUpdate('{{ $comment->body }}')">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -16,4 +16,10 @@
     </form>
 </div>
 @include('components.footer')
+
+<script>
+    function confirmUpdate(commentBody) {
+        return confirm(`¿Desea actualizar el comentario: "${commentBody}"?`);
+    }
+</script>
 @endsection

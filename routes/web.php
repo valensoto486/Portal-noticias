@@ -63,6 +63,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.destroy');
 
+
     // Rutas para editar y eliminar contenido
     Route::get('/admin/content/{forum}/edit', [AdminController::class, 'editContent'])->name('admin.content.edit');
     Route::delete('/admin/content/{forum}', [AdminController::class, 'deleteContent'])->name('admin.content.destroy');

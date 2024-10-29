@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Editar Usuario</h1>
-    <form action="{{ route('admin.users.update', $user) }}" method="POST">
+    <form action="{{ route('admin.users.update', $user) }}" method="POST" onsubmit="return confirmUpdate('{{ $user->name }}')">
         @csrf
         @method('PUT')
         
@@ -17,8 +17,14 @@
             <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
         </div>
         
-        
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
 </div>
+
+<script>
+    function confirmUpdate(userName) {
+        return confirm(`¿Desea actualizar el usuario ${userName}?`);
+    }
+</script>
 @endsection
+

@@ -3,7 +3,14 @@
 @section('content')
 <div class="container">
     <h1>Editar Contenido</h1>
-    <form action="{{ route('admin.content.update', $forum) }}" method="POST">
+    
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <form action="{{ route('admin.content.update', $forum) }}" method="POST" onsubmit="return confirmUpdate('{{ $forum->title }}')">
         @csrf
         @method('PUT')
 
@@ -31,4 +38,10 @@
         <a href="{{ route('admin.content') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+
+<script>
+    function confirmUpdate(contentTitle) {
+        return confirm(`¿Desea actualizar el contenido titulado "${contentTitle}"?`);
+    }
+</script>
 @endsection

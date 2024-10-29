@@ -37,6 +37,21 @@ class AdminController extends Controller
     {
         return view('edit_user', compact('user'));
     }
+    public function updateUser(Request $request, User $user)
+    {
+        // Validar los datos
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+
+        // Actualizar el usuario
+        $user->update($validatedData);
+
+        // Redirigir o regresar una respuesta
+        return redirect()->route('admin.users')->with('success', 'Usuario actualizado exitosamente.');
+    }
+
 
     public function deleteUser(User $user)
     {
@@ -66,7 +81,7 @@ class AdminController extends Controller
 
         $forum->update($request->all());
 
-        return redirect()->route('content')->with('success', 'Contenido actualizado correctamente');
+        return redirect()->route('admin.content')->with('success', 'Contenido actualizado correctamente');
     }
 
 

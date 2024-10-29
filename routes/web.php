@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//Rutas para el perfil
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -77,7 +78,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/comments/{comment}', [CommentController::class, 'update'])->name('admin.comments.update');
     Route::delete('/admin/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.destroy');
     
-});
+    });
     
     Route::middleware(['auth', 'permission:view-posts'])->group(function () {
         
@@ -88,5 +89,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
     
 });
+
+
+
 
 require __DIR__.'/auth.php';

@@ -12,33 +12,37 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Editar el usuario
      */
-    public function edit(Request $request): View
+    public function edit(): View
     {
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => Auth::user(),
         ]);
     }
 
     /**
-     * Update the user's profile information.
+     * Actualizar la información de usuario
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request)
     {
-        $request->user()->fill($request->validated());
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Manejar la subida de imagen si se proporciona
+        if ($request->hasFile('image')) {
+            // Lógica para guardar la imagen
         }
 
-        $request->user()->save();
+        $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
 
+
     /**
-     * Delete the user's account.
+     * Eliminar la cuenta
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -57,4 +61,23 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Cambiar contraseña 
+     */
+    public function changePassword(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'current_password' => 'required|current_password',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = $request->user();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'password-updated');
+    }
+
+
 }

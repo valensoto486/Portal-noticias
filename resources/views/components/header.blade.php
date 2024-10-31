@@ -10,9 +10,10 @@
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('index') }}">Inicio</a></li>
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('forum') }}">Forum</a></li>
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('contact') }}">Contáctenos</a></li>
-                
+
                 @if (Route::has('login'))
                     @auth
+                        <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('profile.edit') }}">Mi Perfil</a></li>
                         @if (Auth::user()->hasRole('admin'))
                             <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         @endif
@@ -31,3 +32,4 @@
         </div>
     </div>
 </nav>
+

@@ -17,9 +17,9 @@
                             <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         @endif
                         <li class="nav-item mx-2">
-                            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                            <form action="{{ route('logout') }}" method="POST" style="display:inline;" class="py-1 py-lg-1">
                                 @csrf
-                                <button type="submit" class="nav-link btn btn-light text-info rounded" style="background-color: white; border: none;">Cerrar Sesión</button>
+                                <li class="nav-item mx-2"><button type="submit" class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded">Cerrar Sesión</button></li>
                             </form>
                         </li>
                     @else

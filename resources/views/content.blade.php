@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Contenido</h1>
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3">Volver al Dashboard</a>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3" style="background-color: #0dcaf0; color: white; border: none;">Volver al Dashboard</a>
     <table class="table">
         <thead>
             <tr>

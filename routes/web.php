@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::delete('/profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image.update');
 });
 
 //Muestra el login
@@ -78,6 +79,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/comments/{comment}/edit', [CommentController::class, 'edit'])->name('admin.comments.edit');
     Route::put('/admin/comments/{comment}', [CommentController::class, 'update'])->name('admin.comments.update');
     Route::delete('/admin/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.destroy');
+
+    Route::patch('/admin/comments/{comment}/approve', [CommentController::class, 'approve'])->name('admin.comments.approve');
+    Route::patch('/admin/comments/{comment}/reject', [CommentController::class, 'reject'])->name('admin.comments.reject');
+    Route::get('/admin/comment-count', [AdminController::class, 'commentCount'])->name('admin.commentCount');
     
     });
     

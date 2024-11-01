@@ -1,24 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Models\Forum;
+use App\Models\Comment; // Importar el modelo Comment
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('dashboard'); 
+        $pendingCommentsCount = Comment::where('is_approved', false)->count();
+        // Devuelve la vista del dashboard con la variable
+        return view('dashboard', compact('pendingCommentsCount'));
     }
 
     public function dashboard()
     {
-        return view('dashboard');
+        $pendingCommentsCount = Comment::where('is_approved', false)->count();
+        
+        // Devuelve la vista del dashboard con la variable
+        return view('dashboard', compact('pendingCommentsCount'));
     }
 
     public function users()
@@ -37,6 +42,7 @@ class AdminController extends Controller
     {
         return view('edit_user', compact('user'));
     }
+
     public function updateUser(Request $request, User $user)
     {
         // Validar los datos
@@ -52,11 +58,10 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'Usuario actualizado exitosamente.');
     }
 
-
     public function deleteUser(User $user)
     {
         $user->delete();
-        return redirect()->route('users')->with('success', 'Usuario eliminado correctamente');
+        return redirect()->route('admin.users')->with('success', 'Usuario eliminado correctamente');
     }
 
     public function editContent(Forum $forum)
@@ -67,7 +72,7 @@ class AdminController extends Controller
     public function deleteContent(Forum $forum)
     {
         $forum->delete();
-        return redirect()->route('content')->with('success', 'Contenido eliminado correctamente');
+        return redirect()->route('admin.content')->with('success', 'Contenido eliminado correctamente');
     }
 
     public function updateContent(Request $request, Forum $forum)
@@ -84,5 +89,26 @@ class AdminController extends Controller
         return redirect()->route('admin.content')->with('success', 'Contenido actualizado correctamente');
     }
 
+    // Método para aprobar un comentario
+    public function approveComment(Comment $comment)
+    {
+        $comment->is_approved = true;
+        $comment->save();
 
+        return redirect()->route('admin.comments.index')->with('success', 'Comentario aprobado correctamente.');
+    }
+
+    // Método para rechazar un comentario
+    public function rejectComment(Comment $comment)
+    {
+        $comment->is_approved = false;
+        $comment->save();
+
+        return redirect()->route('admin.comments.index')->with('success', 'Comentario rechazado correctamente.');
+    }
+
+    public function commentCount()
+    {
+        return $this->dashboard();
+    }
 }

@@ -29,7 +29,7 @@
                         </a>
                     </li>
                 </ul>
-                <div class="small text-center text-muted fst-italic">Creado por: <span class="text-info">Valentina Soto | Alejandro Gómez</span></div>
+                <div class="small text-center text-muted fst-italic">Creado por: <span class="text-info">Valentina Soto | Alejandro Gómez | Julian Rodriguez</span></div>
             </div>
         </div>
     </div>

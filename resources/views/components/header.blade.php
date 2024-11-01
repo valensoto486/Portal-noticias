@@ -11,6 +11,26 @@
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('forum') }}">Forum</a></li>
                 <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('contact') }}">Contáctenos</a></li>
 
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Notificaciones
+                            @if (auth()->user()->unreadNotifications->count())
+                                <span class="badge bg-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="notificationsDropdown">
+                            @forelse (auth()->user()->unreadNotifications as $notification)
+                                <li class="dropdown-item">
+                                    {{ $notification->data['comment'] }} - {{ $notification->created_at->diffForHumans() }}
+                                </li>
+                            @empty
+                                <li class="dropdown-item text-muted">No hay notificaciones</li>
+                            @endforelse
+                        </ul>
+                    </li>
+                @endauth
+
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('profile.edit') }}">Mi Perfil</a></li>
@@ -32,4 +52,3 @@
         </div>
     </div>
 </nav>
-

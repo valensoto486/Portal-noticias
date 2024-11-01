@@ -9,7 +9,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'notice_id', 'body'];
+    protected $fillable = ['user_id', 'notice_id', 'body', 'is_approved'];
 
     public function user()
     {
@@ -20,5 +20,6 @@ class Comment extends Model
     {
         return $this->belongsTo(Forum::class, 'notice_id'); // Cambia 'forum_id' por 'notice_id'
     }
+
 
 }

@@ -16,6 +16,11 @@ class AdminController extends Controller
         $pendingCommentsCount = Comment::where('is_approved', false)->count();
         // Devuelve la vista del dashboard con la variable
         return view('dashboard', compact('pendingCommentsCount'));
+
+        if ($user->hasRole('editor')) {
+            // Si el usuario es un editor, redirigir solo a la gestión de contenido
+            return redirect()->route('admin.content');
+        }
     }
 
     public function dashboard()

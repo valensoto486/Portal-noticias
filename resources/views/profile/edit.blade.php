@@ -1,222 +1,235 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('content')
-<div class="container">
-    <h1 class="text-lg font-medium pt-3">Configuración de Perfil</h1>
+    <title>{{ config('app.name', 'Medellin Hoy') }}</title>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 pt-4 pb-4">
-                {{ __('Información de perfil') }}
-            </h2>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="font-sans antialiased">
+    @include('components.header')
+    <div class="min-h-screen bg-gray-100">
+        <div class="container">
+            <h1 class="text-lg font-medium pt-3">Configuración de Perfil</h1>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __("Actualiza tu información de perfil o Email.") }}
-            </p>
-        </header>
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-        <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-            @csrf
-        </form>
+            <section>
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900 pt-4 pb-4">
+                        {{ __('Información de perfil') }}
+                    </h2>
 
-        <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
-            @csrf
-            @method('patch')
+                    <p class="mt-1 text-sm text-gray-600">
+                        {{ __("Actualiza tu información de perfil o Email.") }}
+                    </p>
+                </header>
 
-            <div>
-                <x-input-label for="name" :value="__('Nombre')" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-                <x-input-error class="mt-2" :messages="$errors->get('name')" />
-            </div>
+                <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+                    @csrf
+                </form>
 
-            <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+                    @csrf
+                    @method('patch')
 
-                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                     <div>
-                        <p class="text-sm mt-2 text-gray-800">
-                            {{ __('Your email address is unverified.') }}
-                            <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                {{ __('Click here to re-send the verification email.') }}
-                            </button>
-                        </p>
+                        <x-input-label for="name" :value="__('Nombre')" />
+                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+                        <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                    </div>
 
-                        @if (session('status') === 'verification-link-sent')
-                            <p class="mt-2 font-medium text-sm text-green-600">
-                                {{ __('A new verification link has been sent to your email address.') }}
-                            </p>
+                    <div>
+                        <x-input-label for="email" :value="__('Email')" />
+                        <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+                        <x-input-error class="mt-2" :messages="$errors->get('email')" />
+
+                        @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+                            <div>
+                                <p class="text-sm mt-2 text-gray-800">
+                                    {{ __('Tu dirección de email no está verificada.') }}
+                                    <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        {{ __('Haz clic aquí para re-enviar el correo de verificación.') }}
+                                    </button>
+                                </p>
+
+                                @if (session('status') === 'verification-link-sent')
+                                    <p class="mt-2 font-medium text-sm text-green-600">
+                                        {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de email.') }}
+                                    </p>
+                                @endif
+                            </div>
                         @endif
                     </div>
-                @endif
-            </div>
 
-            <div class="flex items-center gap-4 pb-4">
-                <x-primary-button>{{ __('Guardar') }}</x-primary-button>
+                    <div class="flex items-center gap-4 pb-4">
+                        <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
-                @if (session('status') === 'profile-updated')
-                    <p
-                        x-data="{ show: true }"
-                        x-show="show"
-                        x-transition
-                        x-init="setTimeout(() => show = false, 2000)"
-                        class="text-sm text-gray-600"
-                    >{{ __('Guardado.') }}</p>
-                @endif
-            </div>
-        </form>
-    </section>
+                        @if (session('status') === 'profile-updated')
+                            <p
+                                x-data="{ show: true }"
+                                x-show="show"
+                                x-transition
+                                x-init="setTimeout(() => show = false, 2000)"
+                                class="text-sm text-gray-600"
+                            >{{ __('Guardado.') }}</p>
+                        @endif
+                    </div>
+                </form>
+            </section>
 
-    <hr>
+            <hr>
 
-    <!-- Sección para Cambiar la Imagen de Perfil -->
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
-                {{ __('Cambiar Imagen de Perfil') }}
-            </h2>
+            <!-- Sección para Cambiar la Imagen de Perfil -->
+            <section>
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
+                        {{ __('Cambiar Imagen de Perfil') }}
+                    </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Sube una nueva imagen para tu perfil.') }}
-            </p>
-        </header>
+                    <p class="mt-1 text-sm text-gray-600">
+                        {{ __('Sube una nueva imagen para tu perfil.') }}
+                    </p>
+                </header>
 
-        <form method="post" action="{{ route('profile.image.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
-            @csrf
-            @method('patch')
+                <form method="post" action="{{ route('profile.image.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
+                    @csrf
+                    @method('patch')
 
-            <div>
-                <x-input-label for="profile_image" :value="__('Imagen de Perfil')" />
-                <x-text-input id="profile_image" name="profile_image" type="file" class="mt-1 block w-full" accept="image/*" />
-                <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
-            </div>
+                    <div>
+                        <x-input-label for="profile_image" :value="__('Imagen de Perfil')" />
+                        <x-text-input id="profile_image" name="profile_image" type="file" class="mt-1 block w-full" accept="image/*" />
+                        <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
+                    </div>
 
-            <div class="flex items-center gap-4 pb-4">
-                <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
+                    <div class="flex items-center gap-4 pb-4">
+                        <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
 
-                @if (session('status') === 'image-updated')
-                    <p
-                        x-data="{ show: true }"
-                        x-show="show"
-                        x-transition
-                        x-init="setTimeout(() => show = false, 2000)"
-                        class="text-sm text-gray-600"
-                    >{{ __('Imagen Actualizada.') }}</p>
-                @endif
-            </div>
-        </form>
-    </section>
+                        @if (session('status') === 'image-updated')
+                            <p
+                                x-data="{ show: true }"
+                                x-show="show"
+                                x-transition
+                                x-init="setTimeout(() => show = false, 2000)"
+                                class="text-sm text-gray-600"
+                            >{{ __('Imagen Actualizada.') }}</p>
+                        @endif
+                    </div>
+                </form>
+            </section>
 
-    <hr>
+            <hr>
 
-    <!-- Formulario para Actualizar Contraseña -->
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
-                {{ __('Actualiza tu contraseña') }}
-            </h2>
+            <!-- Formulario para Actualizar Contraseña -->
+            <section>
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
+                        {{ __('Actualiza tu contraseña') }}
+                    </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Asegúrate de que la cuenta utilice una contraseña segura.') }}
-            </p>
-        </header>
+                    <p class="mt-1 text-sm text-gray-600">
+                        {{ __('Asegúrate de que la cuenta utilice una contraseña segura.') }}
+                    </p>
+                </header>
 
-        <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-            @csrf
-            @method('put')
+                <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                    @csrf
+                    @method('put')
 
-            <div>
-                <x-input-label for="update_password_current_password" :value="__('Contraseña Actual')" />
-                <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-            </div>
+                    <div>
+                        <x-input-label for="update_password_current_password" :value="__('Contraseña Actual')" />
+                        <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+                    </div>
 
-            <div>
-                <x-input-label for="update_password_password" :value="__('Contraseña Nueva')" />
-                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-                <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-            </div>
+                    <div>
+                        <x-input-label for="update_password_password" :value="__('Contraseña Nueva')" />
+                        <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                    </div>
 
-            <div>
-                <x-input-label for="update_password_password_confirmation" :value="__('Confirmar Contraseña')" />
-                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-            </div>
+                    <div>
+                        <x-input-label for="update_password_password_confirmation" :value="__('Confirmar Contraseña')" />
+                        <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                        <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+                    </div>
 
-            <div class="flex items-center gap-4 pb-4">
-                <x-primary-button>{{ __('Guardar') }}</x-primary-button>
+                    <div class="flex items-center gap-4 pb-4">
+                        <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
-                @if (session('status') === 'password-updated')
-                    <p
-                        x-data="{ show: true }"
-                        x-show="show"
-                        x-transition
-                        x-init="setTimeout(() => show = false, 2000)"
-                        class="text-sm text-gray-600"
-                    >{{ __('Guardado.') }}</p>
-                @endif
-            </div>
-        </form>
-    </section>
+                        @if (session('status') === 'password-updated')
+                            <p
+                                x-data="{ show: true }"
+                                x-show="show"
+                                x-transition
+                                x-init="setTimeout(() => show = false, 2000)"
+                                class="text-sm text-gray-600"
+                            >{{ __('Guardado.') }}</p>
+                        @endif
+                    </div>
+                </form>
+            </section>
 
-    <hr>
+            <hr>
 
-    <!-- Formulario para Eliminar Cuenta -->
-    <section class="space-y-6">
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
-                {{ __('Eliminar Cuenta') }}
-            </h2>
+            <!-- Formulario para Eliminar Cuenta -->
+            <section class="space-y-6">
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900 pt-5 pb-4">
+                        {{ __('Eliminar Cuenta') }}
+                    </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Antes de eliminar tu cuenta, descarga cualquier dato o información que desees conservar.') }}
-            </p>
-        </header>
+                    <p class="mt-1 text-sm text-gray-600">
+                        {{ __('Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Antes de eliminar tu cuenta, descarga cualquier dato o información que desees conservar.') }}
+                    </p>
+                </header>
 
-        <x-danger-button
-            x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        >{{ __('Eliminar Cuenta') }}</x-danger-button>
+                <x-danger-button
+                    x-data=""
+                    x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+                >{{ __('Eliminar Cuenta') }}</x-danger-button>
 
-        <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-            <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
-                @csrf
-                @method('delete')
+                <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                    <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                        @csrf
+                        @method('delete')
 
-                <h2 class="text-lg font-medium text-gray-900">
-                    {{ __('¿Estás seguro de que deseas eliminar tu cuenta?') }}
-                </h2>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('¿Estás seguro de que deseas eliminar tu cuenta?') }}
+                        </h2>
 
-                <p class="mt-1 text-sm text-gray-600">
-                    {{ __('Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Por favor, ingresa tu contraseña para confirmar que deseas eliminar tu cuenta permanentemente.') }}
-                </p>
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Por favor, ingresa tu contraseña para confirmar que deseas eliminar tu cuenta.') }}
+                        </p>
 
-                <div class="mt-6">
-                    <x-input-label for="password" value="{{ __('Contraseña') }}" class="sr-only" />
+                        <div class="mt-6">
+                            <x-input-label for="password" :value="__('Contraseña')" />
+                            <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" required />
+                            <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                        </div>
 
-                    <x-text-input
-                        id="password"
-                        name="password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="{{ __('Contraseña') }}"
-                    />
+                        <div class="flex items-center gap-4 mt-6">
+                            <x-danger-button>{{ __('Eliminar Cuenta') }}</x-danger-button>
 
-                    <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
-                </div>
-
-                <div class="mt-6 flex gap-4">
-                    <x-secondary-button x-on:click="$dispatch('close')">{{ __('Cancelar') }}</x-secondary-button>
-
-                    <x-danger-button>{{ __('Eliminar Cuenta') }}</x-danger-button>
-                </div>
-            </form>
-        </x-modal>
-    </section>
-</div>
-@endsection
+                            <x-secondary-button x-on:click="$dispatch('close')">{{ __('Cancelar') }}</x-secondary-button>
+                        </div>
+                    </form>
+                </x-modal>
+            </section>
+        </div>
+    </div>
+    @include('components.footer')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

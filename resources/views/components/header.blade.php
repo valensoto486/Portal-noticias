@@ -14,7 +14,7 @@
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('profile.edit') }}">Mi Perfil</a></li>
-                        @if (Auth::user()->hasRole('admin'))
+                        @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('editor'))
                             <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         @endif
                         <li class="nav-item mx-2">
@@ -25,11 +25,12 @@
                         </li>
                     @else
                         <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-light text-info rounded" href="{{ route('login') }}">Iniciar Sesión</a></li>
-                        <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-lg-1 btn btn-info rounded" href="{{ route('register') }}">Registro</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link px-lg-3 py-1 py-1 btn btn-info rounded" href="{{ route('register') }}">Registro</a></li>
                     @endauth
                 @endif
             </ul>
         </div>
     </div>
 </nav>
+
 

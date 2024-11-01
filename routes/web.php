@@ -11,6 +11,7 @@ use App\Http\Controllers\InicioController;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
 
 
 Route::get('/dashboard', function () {
@@ -96,6 +97,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     
 });
 
+// Ruta notificacion
+Route::get('/admin/notifications', [NotificationController::class, 'index'])->name('admin.notifications');
 
 
 

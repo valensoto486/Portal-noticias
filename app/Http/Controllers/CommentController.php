@@ -22,6 +22,14 @@ class CommentController extends Controller
             'is_approved' => false, // Por defecto, los comentarios no están aprobados
         ]);
 
+        // Envía una notificación a todos los administradores
+        $notificationController = new NotificationController();
+        $notificationController->sendNotification(
+            null,
+            'comment',
+            'Se ha registrado un nuevo comentario.'
+        );
+
         return redirect()->back()->with('success', 'Comentario pendiente de aprobación.');
     }
 

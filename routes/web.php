@@ -21,10 +21,10 @@ Route::get('/dashboard', function () {
 //Rutas para el perfil
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::delete('/profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::patch('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image.update');
+    Route::patch('/profile/image', [ProfileController::class, 'update'])->name('profile.image.update');
 });
 
 //Muestra el login
